@@ -8,21 +8,18 @@ app.use(cors())
 
 
 
-app.get('/', (req, res) => {
+app.get('/wemessage', (req, res) => {
     res.send('Hello World!')
 })
 
-app.get('/info', (req, res) => {
+app.get('/wemessage/info', (req, res) => {
     res.send({
         name: "zhaoolee",
         age: 25
     })
 })
 
-app.get('/message', (req, res) => {
-
-
-
+app.get('/wemessage/message', (req, res) => {
 
 
     res.json({
