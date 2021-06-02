@@ -32,6 +32,7 @@ export default class Index extends Component {
           //发起网络请求
           Taro.request({
             url: 'https://v2fy.com/wemessage/onLogin',
+            method: 'post',
             data: {
               code: res.code
             }

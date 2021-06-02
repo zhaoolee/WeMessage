@@ -19,7 +19,7 @@ app.get('/wemessage/info', (req, res) => {
     })
 })
 
-app.post('wemessage/onLogin', (req, res) => {
+app.post('/wemessage/onLogin', (req, res) => {
     console.log(req);
     res.send({
         name: "zhaoolee",
