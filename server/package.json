@@ -6,6 +6,7 @@
   "scripts": {
     "start": "pm2 start source/wemessage-index.js",
     "stop": "pm2 stop source/wemessage-index.js",
+    "restart": "pm2 restart source/wemessage-index.js",
     "dev": "nodemon"
   },
   "keywords": [],
