@@ -19,6 +19,15 @@ app.get('/wemessage/info', (req, res) => {
     })
 })
 
+app.post('wemessage/onLogin', (req, res) => {
+    console.log(req);
+    res.send({
+        name: "zhaoolee",
+        age: 25
+    })
+})
+
+
 app.get('/wemessage/message', (req, res) => {
 
 
