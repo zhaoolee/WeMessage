@@ -8,3 +8,5 @@ deploy_versions/
 .rn_temp/
 node_modules/
 .DS_Store
+
+db_conf.js
