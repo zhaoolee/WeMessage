@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start source/index.js",
-    "stop": "pm2 stop source/index.js",
+    "start": "pm2 start source/wemessage-index.js",
+    "stop": "pm2 stop source/wemessage-index.js",
     "dev": "nodemon"
   },
   "keywords": [],
