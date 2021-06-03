@@ -12,7 +12,7 @@ nvm use v14.16.0
 ## 项目技术栈说明
 
 - 本项目包含客户端和服务端两套程序,客户端源码在client文件夹中,服务端源码在server文件夹中
-- 客户端使用小程序框架taro构建 @tarojs/cli@3.2.10
+- 客户端使用小程序框架taro构建  , 安装命令npm i @tarojs/cli@3.2.10 -g
 - 服务端使用稳健的Node.js框架Express
 
 ## 新建数据库，数据表

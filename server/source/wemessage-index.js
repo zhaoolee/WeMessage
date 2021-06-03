@@ -157,12 +157,14 @@ app.post('/wemessage/message', async(req, res)=>{
 
 app.get('/wemessage/message', async(req, res) => {
 
-    const { markdown_file_name } = req.body;
+
+
+    const { markdown_file_name } = req.query;
 
     const connection = mysql.createConnection(db_conf.db.online);
     connection.connect();
 
-    let select_message_sql = `select * from message where markdown_file_name = '${markdown_file_name}';`
+    let select_message_sql = `select * from message where markdown_file_name = '${decodeURIComponent(markdown_file_name)}';`
 
     console.log(select_message_sql);
 
