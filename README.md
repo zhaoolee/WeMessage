@@ -32,3 +32,15 @@ CREATE TABLE IF NOT EXISTS `message`(
    PRIMARY KEY ( `snow` )
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
+
+
+## WordPress改造
+
+- 在Wordpress目录下 wp-includes/functions.php 中加入以下代码，允许通过接口新增评论
+
+```
+function filter_rest_allow_anonymous_comments() {
+return true;
+}
+add_filter('rest_allow_anonymous_comments','filter_rest_allow_anonymous_comments');
+```
