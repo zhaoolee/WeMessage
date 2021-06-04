@@ -187,8 +187,8 @@ app.get('/wemessage/message', async(req, res) => {
                 console.log('result==>>',results, 'fields==>>', fields);
                 respond_json = {
                     status: 1000,
-                    message: "留言success",
-                    data: results
+                    message: "获取留言success",
+                    data: results.reverse()
                 }
 
                

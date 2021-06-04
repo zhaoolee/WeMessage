@@ -1,11 +1,10 @@
 import { Component } from 'react'
-import { View, Text, Button, Input, Textarea, Image } from '@tarojs/components'
+import { View, Text, Button, Input, Textarea, Image, Editor } from '@tarojs/components'
 import './index.scss'
 import Taro from '@tarojs/taro';
 
 
 export default class Index extends Component {
-
 
   constructor(props) {
     super(props);
@@ -19,12 +18,15 @@ export default class Index extends Component {
       province: "",
       city: "",
       country: "",
-      markdown_file_name: "https://v2fy.com/p/105-tide-2021-05-29/"
+      markdown_file_name: "https://v2fy.com/p/105-tide-2021-05-29/",
+      textarea_message: ""
     }
 
     this.getUserProfile = this.getUserProfile.bind(this);
     this.getUserInfo = this.getUserInfo.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    this.get_message = this.get_message.bind(this);
+    this.textarea_message_change = this.textarea_message_change.bind(this);
   }
 
   async getUserInfo() {
@@ -61,38 +63,39 @@ export default class Index extends Component {
   }
 
 
+  async get_message(){
+
+    await new Promise((resolve, reject)=>{
+      Taro.request({
+        method: "get",
+        url: "https://v2fy.com/wemessage/message",
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        data: {
+          "markdown_file_name":this.state.markdown_file_name
+        }
+  
+      }).then((res)=>{
+  
+        this.setState({
+          message: res.data.data
+        },()=>{
+          console.log("m==>", this.state.message);
+          resolve();
+        })
+  
+      })
+    })
+
+  }
 
 
   componentWillMount() { }
 
   async componentDidMount() {
 
-
-
-    Taro.request({
-      method: "get",
-      url: "https://v2fy.com/wemessage/message",
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      data: {
-        "markdown_file_name":this.state.markdown_file_name
-      }
-
-    }).then((res)=>{
-
-      this.setState({
-        message: res.data.data
-      },()=>{
-        console.log("m==>", this.state.message)
-      })
-
-    })
-
-
-
-
-
+    await this.get_message();
 
     await this.getUserInfo();
 
@@ -143,27 +146,43 @@ export default class Index extends Component {
       data: {
         "markdown_file_name": "https://v2fy.com/p/105-tide-2021-05-29/",
         "nick_name": this.state.nickName,
-        "message": "万物互联"
+        "message": this.state.textarea_message
       }
     })
 
+    this.setState({
+      textarea_message: ""
+    }, ()=>{
+
+      this.get_message();
+
+    })
+    
+
+  }
+
+  textarea_message_change(e){
+
+
+    this.setState({
+      textarea_message: e.detail.value
+    })
   }
 
   render() {
     return (
       <View className='index'>
-
+        <Text>当前路径:{this.state.markdown_file_name}</Text>
         <Button onClick={this.getUserProfile}>自动填写用户信息</Button>
-        {/* <Image
-          style='width: 300px;height: 100px;background: #fff;'
-          src='nerv_logo.png'
-        /> */}
+
         <Text>用户名:{this.state.nickName}</Text>
 
 
 
 
-        <Textarea className='index-message' autoFocus />
+        
+
+        <Textarea className='index-message' autoFocus value={this.state.textarea_message} onInput={this.textarea_message_change}></Textarea>
         <Button onClick={this.sendMessage} style='background-color:#79685c;color:#ffffff;'>发送留言</Button>
         <View>
           {this.state.message.map((value) => {
