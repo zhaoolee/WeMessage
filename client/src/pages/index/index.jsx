@@ -29,7 +29,6 @@ export default class Index extends Component {
 
   async getUserInfo() {
 
-    console.log("自动获取");
 
     let res = await new Promise((resolve, reject) => {
       Taro.getUserInfo({
@@ -57,8 +56,6 @@ export default class Index extends Component {
       province,
       city,
       country,
-    }, () => {
-      console.log("this.state==>>", this.state);
     })
 
   }
@@ -70,11 +67,9 @@ export default class Index extends Component {
 
   async componentDidMount() {
 
-    console.log("start=getUserInfo");
 
-    this.getUserInfo();
 
-    const res = await Taro.request({
+    Taro.request({
       method: "get",
       url: "https://v2fy.com/wemessage/message",
       header: {
@@ -84,12 +79,22 @@ export default class Index extends Component {
         "markdown_file_name":this.state.markdown_file_name
       }
 
+    }).then((res)=>{
+
+      this.setState({
+        message: res.data.data
+      },()=>{
+        console.log("m==>", this.state.message)
+      })
+
     })
 
-    this.setState({
-      message: res.data.data
-    })
 
+
+
+
+
+    await this.getUserInfo();
 
 
 
@@ -162,7 +167,8 @@ export default class Index extends Component {
         <Button onClick={this.sendMessage} style='background-color:#79685c;color:#ffffff;'>发送留言</Button>
         <View>
           {this.state.message.map((value) => {
-            return <View dangerouslySetInnerHTML={{ __html: `<div>${value.name}</div><div>${value.text}</div>` }}></View>
+            console.log('v', value);
+            return <View dangerouslySetInnerHTML={{ __html: `<div>${value.nick_name}</div><div>${value.message}</div>` }}></View>
           })}
         </View>
       </View>
